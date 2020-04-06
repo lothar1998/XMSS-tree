@@ -1,11 +1,4 @@
 # XMSS-tree
-1.Napisać funkcje tworzącą zabezpieczony randomowy n-bajtowy string.
-2.Generacja pseudolosowego klucza:
- -> "próbkuje" elementy stringa za pomocą zabezpieczonego źródła losowego. (Salsa20)
- -> Następnie korzystam ze wzoru : sk[i] = PRF(S, toByte(i,32)), gdzie S to string lub SEED,
- PRF - funkcja pseudorandomowa, toByte - funkcja zamieniajaca i intiger na postać binarną. 
- sk - prywatny klucz.
-
 
 """
 WOTS+ uses the parameters n and w; they both take positive integer
