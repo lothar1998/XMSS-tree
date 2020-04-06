@@ -28,15 +28,14 @@ def gen_pk(len_):
     i  =  0
     sk = list()
     seed = gen_seed(len_)
-    print(f'SEED: {seed}')
     random.seed(seed)
     seed = [c for c in seed]
 
-    while (i < len_):
+    for i in range(len_):
         j = random.randint(0, len_ - 1 - i)
         sk.append(seed[j])
         seed.remove(seed[j])
-        i += 1
+        
     return ''.join(c for c in sk)
     
     
