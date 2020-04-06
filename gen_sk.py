@@ -29,7 +29,7 @@ def gen_pk(len_):
     sk = list()
     seed = gen_seed(len_)
     random.seed(seed)
-    seed = [c for c in seed]
+    seed = [ _ for _ in seed]
 
     for i in range(len_):
         j = random.randint(0, len_ - 1 - i)
