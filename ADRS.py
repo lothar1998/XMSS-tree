@@ -35,14 +35,14 @@ class ADRS:
         self.third=bytearray(4)
         self.keyAndMask=bytearray(4)
 
-    #getters:
-    def getTreeHeight(self,a):
-        return self.second
+    #getters (they return INTEGERS):
+    def getTreeHeight(self):
+        return int.from_bytes(self.second, byteorder='big')
+    
+    def getTreeIndex(self):
+        return int.from_bytes(self.third, byteorder='big')
 
-    def getTreeIndex(self,a):
-        return self.third
-
-    #setters:
+    #setters (they take INTEGERS):
     def setHashAddress(self,a):
         self.third=(a).to_bytes(4, byteorder='big')
 
@@ -69,3 +69,9 @@ class ADRS:
 
     def setTreeAddress(self,a):
         self.treeAddress=(a).to_bytes(4, byteorder='big')
+
+#TEST
+#adrs=ADRS()
+#print(adrs.getTreeHeight())
+#adrs.setTreeHeight(999999999)
+#print(adrs.getTreeHeight())
