@@ -3,7 +3,7 @@ import random
 import string
 
 
-def calc_len(n, w):
+def calculate_length(n, w):
     """
     n - mssage, private key, public key, signature element length in bytes.
     w - Winternitz parameter, number form a set {4, 16}.
@@ -15,7 +15,7 @@ def calc_len(n, w):
     return len_1 + len_2
 
 
-def gen_seed(n):
+def generate_seed(n):
     """
     returns pseudorandom generated string SEED based on latin alphabet.
     """
@@ -24,12 +24,12 @@ def gen_seed(n):
     return seed
 
 
-def gen_sk(length):
+def generate_secret_key(length):
     """
         returns pseudorandom generated private key (or secret key list "sk") based on SEED.
     """
 
-    SEED = gen_seed(length)                 # Generating SEED string
+    SEED = generate_seed(length)            # Generating SEED string
     random.seed(SEED)                       # Setting random generator's seed with seed value
     SEED = list(SEED)                       # Converting string to simple list's elements
     sk = list()                             # Initializing sk list (array)
@@ -39,8 +39,5 @@ def gen_sk(length):
         SEED.remove(SEED[j])                # Removing appended SEED[j] for avoiding repetitions
 
     return ''.join(_ for _ in sk)           # Returning sk as a string
-
-
-
 
 
