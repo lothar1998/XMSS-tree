@@ -1,5 +1,5 @@
 from generate_sk import generate_secret_key
-from generate_pk import generate_public_key
+from generate_pk_kuglan import generate_public_key
 from basic_utilities import calculate_length
 
 msg_len = 25
