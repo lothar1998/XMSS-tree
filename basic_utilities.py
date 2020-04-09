@@ -3,6 +3,8 @@ import random
 import string
 
 
+# PART 1 - 3.1.7.  Pseudorandom Key Generation
+
 def calculate_length(n, w):
     """
     n - mssage, private key, public key, signature element length in bytes.
@@ -24,20 +26,12 @@ def generate_seed(n):
     return seed
 
 
-def generate_secret_key(length):
-    """
-        returns pseudorandom generated private key (or secret key list "sk") based on SEED.
-    """
-
-    SEED = generate_seed(length)            # Generating SEED string
-    random.seed(SEED)                       # Setting random generator's seed with seed value
-    SEED = list(SEED)                       # Converting string to simple list's elements
-    sk = list()                             # Initializing sk list (array)
-    for i in range(length):                 # Pseudo-randomly generating (sampling) secret key loop, works like (PRF)
-        j = random.randint(0, length - 1 - i)  # Pseudo-randomly choosing index to append to sk from SEED
-        sk.append(SEED[j])
-        SEED.remove(SEED[j])                # Removing appended SEED[j] for avoiding repetitions
-
-    return ''.join(_ for _ in sk)           # Returning sk as a string
+def toByte(value, bytes_count):
+    return value.to_bytes(bytes_count, byteorder='big')
 
 
+def XOR(one, two):
+    out = bytearray()
+    if len(one) == len(two):
+        out = bytes(a ^ b for (a, b) in zip(one, two))
+    return out
