@@ -15,7 +15,7 @@ def generate_secret_key(length):
     for i in range(length):                         # Pseudo-randomly generating (sampling) secret key loop, works like (PRF)
         j = random.randint(0, length - 1 - i)       # Pseudo-randomly choosing index to append to sk from SEED
         sk.append(SEED[j])
-        SEED.remove(SEED[j])                        # Removing appended SEED[j] for avoiding repetitions
+        SEED.remove(SEED[j])                        # Removing appended SEED[j] to avoid repetitions
 
     return ''.join(_ for _ in sk)
 
