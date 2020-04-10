@@ -17,7 +17,7 @@ def generate_secret_key(length):
         sk.append(SEED[j])
         SEED.remove(SEED[j])                        # Removing appended SEED[j] for avoiding repetitions
 
-    return ''.join(_ for _ in sk).encode(encoding='utf-8')                   # Returning sk as a encoded string
+    return ''.join(_ for _ in sk)
 
 
 

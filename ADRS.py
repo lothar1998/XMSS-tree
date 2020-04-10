@@ -1,15 +1,19 @@
 # WATCH OUT WHICH TREE you need to use
 # It would work without getters and setters, but will make it easier for us
 # everything is in big endian
+
 class ADRS:
     # init ADRS structure with bytes containing 0es
-    layerAddress = bytearray(4)
-    treeAddress = bytearray(8)
-    typetype = bytearray(4)
-    first = bytearray(4)
-    second = bytearray(4)
-    third = bytearray(4)
-    keyAndMask = bytearray(4)
+    def __init__(self):
+        self.layerAddress = bytes(4)
+        self.treeAddress = bytes(8)
+        self.type = bytes(4)
+
+        self.first_word = bytes(4)
+        self.second_word = bytes(4)
+        self.third_word = bytes(4)
+
+        self.keyAndMask = bytes(4)
 
     # Types of ADDR:
     # IF typetype == 0 we get OTS Hash Address:
@@ -29,51 +33,48 @@ class ADRS:
     # without "self" functions won't work
 
     # setter of type, which have to clear next 4 fields after typetype
-    def setType(self, a):
-        self.typetype = (a).to_bytes(4, byteorder='big')
-        self.first = bytearray(4)
-        self.second = bytearray(4)
-        self.third = bytearray(4)
+    def setType(self, type):
+        self.type = type.to_bytes(4, byteorder='big')
+        self.first_word = bytearray(4)
+        self.second_word = bytearray(4)
+        self.third_word = bytearray(4)
         self.keyAndMask = bytearray(4)
 
     # getters (they return INTEGERS):
     def getTreeHeight(self):
-        return int.from_bytes(self.second, byteorder='big')
+        return self.second_word
 
     def getTreeIndex(self):
-        return int.from_bytes(self.third, byteorder='big')
+        return self.third_word
 
     # setters (they take INTEGERS):
-    def setHashAddress(self, a):
-        self.third = (a).to_bytes(4, byteorder='big')
+    def setHashAddress(self, value):
+        self.third_word = value.to_bytes(4, byteorder='big')
 
-    def setKeyAndMask(self, a):
-        self.keyAndMask = (a).to_bytes(4, byteorder='big')
+    def setKeyAndMask(self, value):
+        self.keyAndMask = value.to_bytes(4, byteorder='big')
 
-    def setChainAddress(self, a):
-        self.second = (a).to_bytes(4, byteorder='big')
+    def setChainAddress(self, value):
+        self.second = value.to_bytes(4, byteorder='big')
 
-    def setTreeHeight(self, a):
-        self.second = (a).to_bytes(4, byteorder='big')
+    def setTreeHeight(self, value):
+        self.second_word = value.to_bytes(4, byteorder='big')
 
-    def setTreeIndex(self, a):
-        self.third = (a).to_bytes(4, byteorder='big')
+    def setTreeIndex(self, value):
+        self.third_word = value.to_bytes(4, byteorder='big')
 
-    def setOTSAddress(self, a):
-        self.first = (a).to_bytes(4, byteorder='big')
+    def setOTSAddress(self, value):
+        self.first = value.to_bytes(4, byteorder='big')
 
-    def setLTreeAddress(self, a):
-        self.first = (a).to_bytes(4, byteorder='big')
+    def setLTreeAddress(self, value):
+        self.first = value.to_bytes(4, byteorder='big')
 
-    def setLayerAddress(self, a):
-        self.layerAddress = (a).to_bytes(4, byteorder='big')
+    def setLayerAddress(self, value):
+        self.layerAddress = value.to_bytes(4, byteorder='big')
 
-    def setTreeAddress(self, a):
-        self.treeAddress = (a).to_bytes(4, byteorder='big')
+    def setTreeAddress(self, value):
+        self.treeAddress = value.to_bytes(4, byteorder='big')
 
 
-# TEST
-adrs = ADRS()
-print(adrs.getTreeHeight())
-adrs.setTreeHeight(999999999)
-print(adrs.getTreeHeight())
+
+

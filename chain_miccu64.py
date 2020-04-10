@@ -41,7 +41,17 @@ def chain(X, i, s, SEED, ADRS, tmp=bytearray()):
     ADRS.setKeyAndMask(1)
     BM = PRF(SEED, ADRS)  # SAVE BM
     # BM means BitMask
-
     tmp = F(KEY, XOR(tmp, BM))
     # returns byte array
     return tmp
+
+
+
+# from ADRS import ADRS
+# from basic_utilities import generate_seed
+# # TEST
+# seed = generate_seed(32)
+# adrs = ADRS()
+# res = chain("asdffthutrehgftyhui654ui867ytr5fasdffthutrehgftyhui654ui867ytr5f", 3, 8, seed, adrs)
+# print(res)
+#

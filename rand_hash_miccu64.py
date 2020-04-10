@@ -33,4 +33,13 @@ def RAND_HASH(left, right, SEED, ADRS):
     BM_0 = PRF(SEED, ADRS)
     ADRS.setKeyAndMask(2)
     BM_1 = PRF(SEED, ADRS)
-    return H(KEY, XOR(left, BM_0) + XOR(right, BM_1))
+    if left is bytearray and right is bytearray:
+        return H(KEY, XOR(left, BM_0) + XOR(right, BM_1))
+    else:
+        return H(KEY, XOR(bytes(left.encode()), BM_0) + XOR(bytes(right.encode()), BM_1))
+
+#TEST
+#seed=gen_seed(32);
+#adrs=ADRS()
+#res=chain("asdffthutrehgftyhui654ui867ytr5fasdffthutrehgftyhui654ui867ytr5f",3,8,seed,adrs)
+#print(res)

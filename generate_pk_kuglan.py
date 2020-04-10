@@ -6,6 +6,7 @@ def generate_public_key(private_key: [bytes], length: int, w: int in {4, 16}, SE
 
     for i in range(0, length):  # generating public key based on chain function with given private key
         ADRS.setChainAddress(i)
+        #print(chain(private_key[i], 0, w - 1, SEED, ADRS))
         public_key[i] = chain(private_key[i], 0, w - 1, SEED, ADRS)
 
     return public_key

@@ -31,7 +31,4 @@ def toByte(value, bytes_count):
 
 
 def XOR(one, two):
-    out = bytearray()
-    if len(one) == len(two):
-        out = bytes(a ^ b for (a, b) in zip(one, two))
-    return out
+    return bytes(a ^ b for (a, b) in zip(one, two))

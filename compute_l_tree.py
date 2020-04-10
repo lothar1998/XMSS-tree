@@ -27,6 +27,9 @@ def compute_tree_leaves(pk, ADRS, SEED):
             pk[math.floor(length / 2)] = pk[length - 1]
 
         length = math.ceil(length / 2)
-        ADRS.setTreeHeight(ADRS.getTreeHeight() + 1)
+        height = ADRS.getTreeHeight()
+        height = int.from_bytes(height, byteorder='big')
+        ADRS.setTreeHeight(height + 1)
 
     return pk[0]
+
