@@ -18,9 +18,11 @@ def compute_tree_leaves(pk, ADRS, SEED):
     length = len(pk)
     ADRS.setTreeHeight(0)
 
+    # print(pk[0])
     while length > 1:
         for i in range(math.floor(length / 2)):
             ADRS.setTreeIndex(i)
+            # print(RAND_HASH(pk[2 * i], pk[2 * i + 1], SEED, ADRS))
             pk[i] = RAND_HASH(pk[2 * i], pk[2 * i + 1], SEED, ADRS)
 
         if length % 2 == 1:
@@ -30,6 +32,6 @@ def compute_tree_leaves(pk, ADRS, SEED):
         height = ADRS.getTreeHeight()
         height = int.from_bytes(height, byteorder='big')
         ADRS.setTreeHeight(height + 1)
+    # print(pk[0])
 
     return pk[0]
-
