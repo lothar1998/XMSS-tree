@@ -11,11 +11,13 @@ SEED = generate_seed(msg_len)
 adrs = ADRS()
 
 sk = generate_secret_key(length)
-print(sk)
 pk = generate_public_key(sk, length, w, SEED, adrs)
-print(pk)
 l_tree = compute_tree_leaves(pk, adrs, SEED)
+
+print("================================ SECRET KEYS ================================ |", end='')
+print(" ================================ PUBLIC KEYS ================================")
+for sk_key, pk_key in zip(sk, pk):
+    print(sk_key, pk_key)
+
+print("================================ L-TREE VALUE ================================")
 print(l_tree)
-
-
-
