@@ -27,10 +27,7 @@ def chain(X, i, s, SEED, ADRS, tmp=bytearray()):
     # w is 4 or 16, depends of us - CHOOSE ONE VALUE EVERYWHERE
     w = 16
     if s == 0:
-        # it returns X as byte array
-        help_ = bytearray()
-        help_.extend(map(ord, X))
-        return help_
+        return X
     if (i + s) > (w - 1):
         return None
     tmp = (chain(X, i, s - 1, SEED, ADRS, tmp))

@@ -1,23 +1,29 @@
 # PART 1 - 3.1.7.  Pseudorandom Key Generation
 import random
+import hashlib
 from basic_utilities import generate_seed, toByte
 
 
+def pseudorandom_function(s, bytes_):
+    # PRF: SHA2-256(toByte(3, 32) || KEY || M)
+    key = bytearray()
+    key.extend(map(ord, s))
+
+    converted = hashlib.sha256(bytes_ + key).hexdigest()
+    out = bytearray()
+    out.extend(map(ord, converted))
+    return out
+
+
 def generate_secret_key(length):
-    """
-        returns pseudorandom generated private key (or secret key list "sk") based on SEED.
-    """
+    secret_key = [bytes()] * length
 
-    SEED = generate_seed(length)                    # Generating SEED string
-    random.seed(SEED)                               # Setting random generator's seed with seed value
-    SEED = list(SEED)                               # Converting string to simple list's elements
-    sk = list()                                     # Initializing sk list (array)
-    for i in range(length):                         # Pseudo-randomly generating (sampling) secret key loop, works like (PRF)
-        j = random.randint(0, length - 1 - i)       # Pseudo-randomly choosing index to append to sk from SEED
-        sk.append(SEED[j])
-        SEED.remove(SEED[j])                        # Removing appended SEED[j] to avoid repetitions
+    for i in range(length):
+        SEED = generate_seed(length)  # Generating SEED string
+        random.seed(SEED)  # Setting random generator's seed with seed value
 
-    return ''.join(_ for _ in sk)
+        # initialize sk[i] with a uniformly random n-byte string;
+        secret_key[i] = pseudorandom_function(SEED, toByte(i, 32))
 
 
-
+    return secret_key
