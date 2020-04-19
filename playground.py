@@ -12,7 +12,6 @@ adrs = ADRS()
 
 sk = generate_secret_key(length, msg_len)
 pk = generate_public_key(sk, length, w, SEED, adrs)
-pk0_before_compression = pk[0]
 
 print(" SECRET KEYS | PUBLIC KEYS ", end='')
 for sk_key, pk_key in zip(sk, pk):
