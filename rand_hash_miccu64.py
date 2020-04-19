@@ -4,8 +4,9 @@ from basic_utilities import XOR, toByte
 
 def H(KEY, M):
     # H: SHA2-256(toByte(1, 32) || KEY || M)
+    key_len = len(KEY)
     toBytes = toByte(1, 4)
-    help_ = hashlib.sha256(toBytes + KEY + M).hexdigest()
+    help_ = hashlib.sha256(toBytes + KEY + M).hexdigest()[:key_len]
     out = bytearray()
     out.extend(map(ord, help_))
     return out
@@ -14,9 +15,10 @@ def H(KEY, M):
 def PRF(KEY, M):
     # PRF: SHA2-256(toByte(3, 32) || KEY || M)
     toBytes = toByte(3, 4)
+    key_len = len(KEY)
     KEY2 = bytearray()
     KEY2.extend(map(ord, KEY))
-    help_ = hashlib.sha256(toBytes + KEY2 + M.keyAndMask).hexdigest()
+    help_ = hashlib.sha256(toBytes + KEY2 + M.keyAndMask).hexdigest()[:key_len*2]
     out = bytearray()
     out.extend(map(ord, help_))
     return out

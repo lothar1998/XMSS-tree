@@ -14,8 +14,9 @@ from rand_hash_miccu64 import PRF
 
 def F(KEY, M):
     # F: SHA2-256(toByte(0, 32) || KEY || M)
+    key_len = len(KEY)
     toBytes = toByte(0, 4)
-    help_ = hashlib.sha256(toBytes + KEY + M).hexdigest()
+    help_ = hashlib.sha256(toBytes + KEY + M).hexdigest()[:key_len]
     out = bytearray()
     out.extend(map(ord, help_))
     return out
