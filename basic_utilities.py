@@ -11,7 +11,7 @@ def calculate_length(n, w):
     w - Winternitz parameter, number form a set {4, 16}.
     returns calculated parameter length based on "n" and "w" parameters.
     """
-    len_1 = math.ceil(8 * n / math.log2(w)) + 1
+    len_1 = math.ceil(8 * n / math.log2(w))
     len_2 = math.floor(math.log2(len_1 * (w - 1)) / math.log2(w)) + 1
 
     return len_1 + len_2

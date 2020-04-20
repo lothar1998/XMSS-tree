@@ -4,8 +4,9 @@ from generate_sk import generate_secret_key
 from generate_pk_kuglan import generate_public_key
 from compute_l_tree import compute_tree_leaves
 from WOTS_sign import *
+from WOTS_sign_ver import *
 
-msg_len = 6
+msg_len = 4
 w = 16
 length = calculate_length(msg_len, w)
 SEED = generate_seed(msg_len)
@@ -14,7 +15,7 @@ adrs = ADRS()
 sk = generate_secret_key(length, msg_len)
 pk = generate_public_key(sk, length, w, SEED, adrs)
 
-print(" SECRET KEYS | PUBLIC KEYS ", end='')
+print(" SECRET KEYS | PUBLIC KEYS ", end='\n')
 for sk_key, pk_key in zip(sk, pk):
     print(sk_key, pk_key)
 
@@ -25,5 +26,14 @@ print("L-TREE VALUE")
 print(l_tree)
 
 print("SIGNATURE")
-signature = WOTS_sign("ABCDEF".encode(), sk, 16, SEED, adrs)
+signature = WOTS_sign(("A" * msg_len).encode(), sk, 16, SEED, adrs)
 print(signature)
+
+adrs2 = ADRS()
+
+pk_from_signature = WOTS_sign_ver(("A" * msg_len).encode(), signature, 16, adrs2, SEED)
+
+
+for a, b in zip(pk, pk_from_signature):
+    print(a, b, a == b)
+
