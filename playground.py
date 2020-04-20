@@ -24,5 +24,6 @@ l_tree = compute_tree_leaves(pk, adrs, SEED, length)
 print("L-TREE VALUE")
 print(l_tree)
 
+print("SIGNATURE")
 signature = WOTS_sign("ABCDEF".encode(), sk, 16, SEED, adrs)
 print(signature)
