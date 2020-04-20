@@ -3,6 +3,7 @@ from basic_utilities import generate_seed, calculate_length
 from generate_sk import generate_secret_key
 from generate_pk_kuglan import generate_public_key
 from compute_l_tree import compute_tree_leaves
+from WOTS_sign import *
 
 msg_len = 6
 w = 16
@@ -22,3 +23,6 @@ l_tree = compute_tree_leaves(pk, adrs, SEED, length)
 
 print("L-TREE VALUE")
 print(l_tree)
+
+signature = WOTS_sign("ABCDEF".encode(), sk, 16, SEED, adrs)
+print(signature)
