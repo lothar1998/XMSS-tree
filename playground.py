@@ -6,7 +6,7 @@ from compute_l_tree import compute_tree_leaves
 from WOTS_sign import *
 from WOTS_sign_ver import *
 
-msg_len = 4
+msg_len = 1
 w = 16
 length = calculate_length(msg_len, w)
 SEED = generate_seed(msg_len)
@@ -25,14 +25,21 @@ l_tree = compute_tree_leaves(pk, adrs, SEED, length)
 print("L-TREE VALUE")
 print(l_tree)
 
+msg = "A" * msg_len
+msg = msg.encode()
+
 print("SIGNATURE")
-signature = WOTS_sign(("A" * msg_len).encode(), sk, 16, SEED, adrs)
+signature = WOTS_sign(msg, sk, 16, SEED, adrs)
 print(signature)
 
 adrs2 = ADRS()
 
-pk_from_signature = WOTS_sign_ver(("A" * msg_len).encode(), signature, 16, adrs2, SEED)
+pk_from_signature = WOTS_sign_ver(msg, signature, 16, adrs2, SEED)
 
+print()
+print(pk)
+print(pk_from_signature)
+print()
 
 for a, b in zip(pk, pk_from_signature):
     print(a, b, a == b)
