@@ -26,7 +26,7 @@ def WOTS_sign_ver(message: bytes, signature: [bytes], w: int in {4, 16}, ADRS, S
 
     for i in range(0, len_all):  # Computing a WOTS+ public key from a message and its signature
         ADRS.setChainAddress(i)
-        tmp_pk[i] = chain(signature[i], msg[i], w - 1 - msg[i], SEED, ADRS)
+        tmp_pk[i] = chain(signature[i], msg[i], w - 1 - msg[i], SEED, ADRS, w)
 
     return tmp_pk
 

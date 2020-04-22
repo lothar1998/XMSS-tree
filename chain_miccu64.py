@@ -24,14 +24,14 @@ def F(KEY, M):
 
 # Input: Input string X, start index i, number of steps s, seed SEED, address ADRS
 # Output: value of F iterated s times on X (it returns byte array)
-def chain(X, i, s, SEED, ADRS, tmp=bytearray()):
+def chain(X, i, s, SEED, ADRS, w):
     # w is 4 or 16, depends of us - CHOOSE ONE VALUE EVERYWHERE
-    w = 16
+
     if s == 0:
         return X
     if (i + s) > (w - 1):
         return None
-    tmp = (chain(X, i, s - 1, SEED, ADRS, tmp))
+    tmp = chain(X, i, s - 1, SEED, ADRS, w)
 
     ADRS.setHashAddress((i + s - 1))
     ADRS.setKeyAndMask(0)

@@ -27,7 +27,7 @@ def WOTS_sign(message: bytes, private_key: [bytes], w: int in {4, 16}, SEED, ADR
 
     for i in range(0, len_all):  # computing signature based on chain function with private key
         ADRS.setChainAddress(i)
-        signature[i] = chain(private_key[i], 0, msg[i], SEED, ADRS)
+        signature[i] = chain(private_key[i], 0, msg[i], SEED, ADRS, w)
 
     return signature
 
