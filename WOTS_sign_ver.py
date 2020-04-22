@@ -1,5 +1,6 @@
 from math import ceil, floor, log2, log
 from base_w import *
+from basic_utilities import bytes_needed, lengths
 from chain_miccu64 import *
 
 
@@ -29,22 +30,3 @@ def WOTS_sign_ver(message: bytes, signature: [bytes], w: int in {4, 16}, ADRS, S
         tmp_pk[i] = chain(signature[i], msg[i], w - 1 - msg[i], SEED, ADRS, w)
 
     return tmp_pk
-
-
-# get x integer as bytes in big endian with y byte length
-def toByte(x, y):
-    return x.to_bytes(y, byteorder='big')
-
-
-# compute all required lengths
-def lengths(n: int, w: int in {4, 16}):
-    len_1 = ceil(8 * n / log2(w))
-    len_2 = floor(log2(len_1 * (w - 1)) / log2(w)) + 1
-    len_all = len_1 + len_2
-    return len_1, len_2, len_all
-
-
-def bytes_needed(n):
-    if n == 0:
-        return 1
-    return int(log(n, 256)) + 1

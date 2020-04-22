@@ -30,23 +30,3 @@ def WOTS_sign(message: bytes, private_key: [bytes], w: int in {4, 16}, SEED, ADR
         signature[i] = chain(private_key[i], 0, msg[i], SEED, ADRS, w)
 
     return signature
-
-
-# get x integer as bytes in big endian with y byte length
-def toByte(x, y):
-    return x.to_bytes(y, byteorder='big')
-
-
-# compute all required lengths
-def lengths(n: int, w: int in {4, 16}):
-    len_1 = ceil(8 * n / log2(w))
-    len_2 = floor(log2(len_1 * (w - 1)) / log2(w)) + 1
-    len_all = len_1 + len_2
-    return len_1, len_2, len_all
-
-
-# compute bytes needed to store integer value (custom, because provided equation seems to be wrong)
-def bytes_needed(n):
-    if n == 0:
-        return 1
-    return int(log(n, 256)) + 1
