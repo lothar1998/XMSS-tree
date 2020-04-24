@@ -1,4 +1,4 @@
-import math
+from math import floor, ceil
 from rand_hash_miccu64 import RAND_HASH
 
 
@@ -13,20 +13,20 @@ from rand_hash_miccu64 import RAND_HASH
 # to a single n-byte value pk[0]. It also takes as input an L-tree
 # address ADRS that encodes the address of the L-tree and the seed SEED.
 
-def compute_tree_leaves(pk, ADRS, SEED, length):
+def ltree(pk, ADRS, SEED, length):
     # unsigned int len’ = len; w RFCku cos takiego z dupy wzięte w sumie więc zakładam ze chodzi o dlugosc pk
     ADRS.setTreeHeight(0)
 
     # print(pk[0])
     while length > 1:
-        for i in range(math.floor(length / 2)):
+        for i in range(floor(length / 2)):
             ADRS.setTreeIndex(i)
             pk[i] = RAND_HASH(pk[2 * i], pk[2 * i + 1], SEED, ADRS)
 
         if length % 2 == 1:
-            pk[math.floor(length / 2)] = pk[length - 1]
+            pk[floor(length / 2)] = pk[length - 1]
 
-        length = math.ceil(length / 2)
+        length = ceil(length / 2)
         height = ADRS.getTreeHeight()
         height = int.from_bytes(height, byteorder='big')
         ADRS.setTreeHeight(height + 1)

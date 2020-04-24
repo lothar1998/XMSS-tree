@@ -1,10 +1,11 @@
 from ADRS import ADRS
 from basic_utilities import generate_seed
 from generate_sk import generate_secret_key
-from generate_pk_kuglan import generate_public_key
-from compute_l_tree import compute_tree_leaves
+from generate_pk_kuglan import WOTS_genPK
+from compute_l_tree import ltree
 from WOTS_sign import *
 from WOTS_sign_ver import *
+from XMSS_keyGen import *
 
 msg_len = 6
 w = 16
@@ -14,7 +15,7 @@ SEED = generate_seed(msg_len)
 adrs = ADRS()
 
 sk = generate_secret_key(length_all, msg_len)
-pk = generate_public_key(sk, length_all, w, SEED, adrs)
+pk = WOTS_genPK(sk, length_all, w, SEED, adrs)
 
 print(" SECRET KEYS | PUBLIC KEYS ", end='\n')
 for sk_key, pk_key in zip(sk, pk):
@@ -41,9 +42,14 @@ for a, b in zip(pk, pk_from_signature):
     print(a, b, a == b, i)
     i += 1
 
-
-
-#l_tree = compute_tree_leaves(pk, adrs, SEED, length)
+# SK = XMSSPrivateKey()
+# SK.setWOTS_SK(sk)
+# SK.setSEED(SEED)
+# adrs3 = ADRS()
 #
-# print("L-TREE VALUE")
-# print(l_tree)
+# rootNode = treeHash(SK, 0, 1, adrs3, w, length_all, len_1)
+#
+# print(rootNode)
+
+keypair = XMSS_keyGen(2, msg_len, w)
+print(keypair)
