@@ -10,7 +10,7 @@ def set_random_values(n):
     seed = generate_seed(n)
     return seed
 
-def XMSS_keyGen(height, n: int, w: int in {4, 16}):
+def XMSS_keyGen(height, n: int, w: int in {4, 16}, adrs: ADRS):
     """
     Structure of SK and PK
     SK = idx || wots_sk || SK_PRF || root || SEED;
@@ -30,7 +30,6 @@ def XMSS_keyGen(height, n: int, w: int in {4, 16}):
     SEED = set_random_values(n)
     SK.setSEED(SEED)
     SK.setWOTS_SK(wots_sk)
-    adrs = ADRS()
 
     len_1, len_2, len_all = lengths(n, w)
 

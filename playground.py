@@ -6,6 +6,7 @@ from compute_l_tree import ltree
 from WOTS_sign import *
 from WOTS_sign_ver import *
 from XMSS_keyGen import *
+from TreeSig import *
 
 msg_len = 6
 w = 16
@@ -50,6 +51,10 @@ for a, b in zip(pk, pk_from_signature):
 # rootNode = treeHash(SK, 0, 1, adrs3, w, length_all, len_1)
 #
 # print(rootNode)
+adrs3 = ADRS()
 
-keypair = XMSS_keyGen(2, msg_len, w)
-print(keypair)
+keypair = XMSS_keyGen(2, msg_len, w, adrs3)
+
+Sig = treeSig(msg, keypair.getSK(), adrs3, w, length_all, int.from_bytes(adrs3.getTreeIndex(), byteorder='big'))
+print(Sig)
+
