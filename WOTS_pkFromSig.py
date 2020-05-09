@@ -4,10 +4,10 @@ from basic_utilities import bytes_needed, lengths
 from chain_miccu64 import *
 
 
-def WOTS_sign_ver(message: bytes, signature: [bytes], w: int in {4, 16}, ADRS, SEED):
+def WOTS_pkFromSig(message: bytes, signature: [bytes], w: int in {4, 16}, ADRS, SEED):
     checksum = 0
 
-    n = len(message)  # length of message
+    n = len(message) // 2  # length of message
     len_1, len_2, len_all = lengths(n, w)
 
     msg = base_w(message, w, len_1)  # transformation message into base w

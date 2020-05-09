@@ -7,7 +7,7 @@ from base_w import *
 def WOTS_sign(message: bytes, private_key: [bytes], w: int in {4, 16}, SEED, ADRS):
     checksum = 0
 
-    n = len(message)  # length of message
+    n = len(message) // 2 # length of message
     len_1, len_2, len_all = lengths(n, w)
 
     msg = base_w(message, w, len_1)  # transformation into base w

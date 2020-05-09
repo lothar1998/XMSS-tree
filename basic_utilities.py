@@ -2,6 +2,8 @@ import random
 import string
 from math import floor, log2, log, ceil
 
+from binascii import unhexlify
+
 
 # PART 1 - 3.1.7.  Pseudorandom Key Generation
 def generate_seed(n):
@@ -31,5 +33,22 @@ def toByte(value, bytes_count):
     return value.to_bytes(bytes_count, byteorder='big')
 
 
-def XOR(one, two):
-    return bytes(a ^ b for (a, b) in zip(one, two))
+def XOR(one: bytearray, two: bytearray) -> bytearray:
+    return bytearray(a ^ b for (a, b) in zip(one, two))
+
+
+def long_to_bytes (val, bytes):
+    byteVal = toByte(val, bytes)
+    acc = bytearray()
+    for i in range(len(byteVal)):
+        if byteVal[i] < 16:
+            acc.extend(b'0')
+        curr = hex(byteVal[i])[2:]
+        acc.extend(curr.encode())
+    return acc
+
+
+if __name__ == '__main__':
+
+    value = long_to_bytes(256, 4)
+    print(value)

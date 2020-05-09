@@ -6,11 +6,13 @@ from XMSSKeyPair import *
 from ADRS import ADRS
 from treeHash import *
 
+
 def set_random_values(n):
     seed = generate_seed(n)
     return seed
 
-def XMSS_keyGen(height, n: int, w: int in {4, 16}, adrs: ADRS):
+
+def XMSS_keyGen(height: int, n: int, w: int in {4, 16}) -> XMSSKeypair:
     """
     Structure of SK and PK
     SK = idx || wots_sk || SK_PRF || root || SEED;
@@ -18,9 +20,11 @@ def XMSS_keyGen(height, n: int, w: int in {4, 16}, adrs: ADRS):
     OID = object identifier
     :return: KeyPair
     """
+    len_1, len_2, len_all = lengths(n, w)
+
     wots_sk = []
     for i in range(0, 2 ** height):
-        wots_sk.append(generate_secret_key(w, n))
+        wots_sk.append(generate_secret_key(len_all, n))
 
     SK = XMSSPrivateKey()
     PK = XMSSPublicKey()
@@ -31,13 +35,12 @@ def XMSS_keyGen(height, n: int, w: int in {4, 16}, adrs: ADRS):
     SK.setSEED(SEED)
     SK.setWOTS_SK(wots_sk)
 
-    len_1, len_2, len_all = lengths(n, w)
+    adrs = ADRS()
 
-    root = treeHash(SK, 0, height, adrs, w, len(wots_sk))
+    root = treeHash(SK, 0, height, adrs, w, len_all)
 
     SK.setIdx(idx)
     SK.setRoot(root)
-
 
     PK.setOID(set_random_values(n))
     PK.setRoot(root)
@@ -45,3 +48,8 @@ def XMSS_keyGen(height, n: int, w: int in {4, 16}, adrs: ADRS):
 
     KeyPair = XMSSKeypair(SK, PK)
     return KeyPair
+
+
+if __name__ == '__main__':
+    value = XMSS_keyGen(2, 6, 16)
+    print(value)

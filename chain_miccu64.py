@@ -9,7 +9,7 @@
 
 import hashlib
 from basic_utilities import toByte, XOR
-from rand_hash_miccu64 import PRF
+from RAND_HASH import PRF
 
 
 def F(KEY, M):

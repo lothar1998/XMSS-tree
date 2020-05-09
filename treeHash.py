@@ -1,11 +1,11 @@
 from math import pow
 from ADRS import *
 from XMSSPrivateKey import *
-from compute_l_tree import *
+from ltree import *
 from generate_pk_kuglan import *
 
 
-def treeHash(SK: XMSSPrivateKey, s: int, t: int, adrs: ADRS, w: int, len_1: int):
+def treeHash(SK: XMSSPrivateKey, s: int, t: int, adrs: ADRS, w: int in {4, 16}, length_all: int) -> bytearray:
 
     Stack = []
 
@@ -16,10 +16,10 @@ def treeHash(SK: XMSSPrivateKey, s: int, t: int, adrs: ADRS, w: int, len_1: int)
         SEED = SK.getSEED()
         adrs.setType(0)
         adrs.setOTSAddress(s + i)
-        pk = WOTS_genPK(SK.getWOTS_SK(s + i), len_1, w, SEED, adrs)
+        pk = WOTS_genPK(SK.getWOTS_SK(s + i), length_all, w, SEED, adrs)
         adrs.setType(1)
         adrs.setLTreeAddress(s + i)
-        node = ltree(pk, adrs, SEED, len_1 // 2)  # leaf -> height is 0
+        node = ltree(pk, adrs, SEED, length_all)  # leaf -> height is 0
 
         node_as_stack_element = StackElement(node, 0)  # wrap node into StackElement to store height with node in Stack
 

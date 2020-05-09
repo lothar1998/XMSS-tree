@@ -2,11 +2,14 @@ from ADRS import ADRS
 from basic_utilities import generate_seed
 from generate_sk import generate_secret_key
 from generate_pk_kuglan import WOTS_genPK
-from compute_l_tree import ltree
+from ltree import ltree
 from WOTS_sign import *
-from WOTS_sign_ver import *
+from WOTS_pkFromSig import *
 from XMSS_keyGen import *
-from TreeSig import *
+from treeSig import *
+from XMSS_sign import *
+from XMSS_rootFromSig import *
+from XMSS_verify import *
 
 msg_len = 6
 w = 16
@@ -22,8 +25,7 @@ print(" SECRET KEYS | PUBLIC KEYS ", end='\n')
 for sk_key, pk_key in zip(sk, pk):
     print(sk_key, pk_key)
 
-msg = "A" * msg_len
-msg = msg.encode()
+msg = bytearray(b'0e4575aa2c51')
 
 print("SIGNATURE")
 signature = WOTS_sign(msg, sk, 16, SEED, adrs)
@@ -31,7 +33,7 @@ print(signature)
 
 adrs2 = ADRS()
 
-pk_from_signature = WOTS_sign_ver(msg, signature, 16, adrs2, SEED)
+pk_from_signature = WOTS_pkFromSig(msg, signature, 16, adrs2, SEED)
 
 print()
 print(pk)
@@ -55,6 +57,16 @@ adrs3 = ADRS()
 
 keypair = XMSS_keyGen(2, msg_len, w, adrs3)
 
-Sig = treeSig(msg, keypair.getSK(), adrs3, w, length_all, int.from_bytes(adrs3.getTreeIndex(), byteorder='big'))
-print(Sig)
+# Sig = treeSig(msg, keypair.getSK(), adrs3, w, length_all, int.from_bytes(adrs3.getTreeIndex(), byteorder='big'))
+# print(Sig)
+
+Sig = XMSS_sign(msg, keypair.getSK(), w, adrs3)
+
+value = XMSS_rootFromSig(Sig.idx_sig, Sig.sig.getSig_ots(), Sig.sig.getAuth(), msg, int.from_bytes(adrs3.getTreeHeight(), byteorder='big'), w, SEED, adrs3)
+
+result = XMSS_verify(Sig, msg, keypair.getPK(), w, SEED, adrs3)
+
+print(result)
+#
+
 
