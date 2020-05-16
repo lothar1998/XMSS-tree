@@ -17,9 +17,7 @@ def XMSS_sign(message: bytearray, SK: XMSSPrivateKey, w: int in {4, 16}, adrs: A
     arrayOfBytes.extend(r)
     arrayOfBytes.extend(SK.getRoot())
     arrayOfBytes.extend(bytearray(long_to_bytes(idx_sig, n)))
-    M2 = H_msg(arrayOfBytes, message, len_1)  # TODO n nie wiadomo czy n czy 4
-
-    idx_sig_bytes = toByte(idx_sig, 4).hex().encode()
+    M2 = H_msg(arrayOfBytes, message, len_1)
 
     value = treeSig(M2, SK, adrs, w, length_all, idx_sig, h)
 

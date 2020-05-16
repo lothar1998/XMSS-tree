@@ -29,7 +29,16 @@ if __name__ == '__main__':
     message = bytearray(b'0e4575aa2c51')
     KeyPair = XMSS_keyGen(2, 6, 16)
     len_1, len_2, len_all = lengths(6, 16)
-    signature = XMSS_sign(message, KeyPair.getSK(), 16, ADRS(), 2)
 
-    output = XMSS_verify(signature, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
-    print(output)
+    adrs = ADRS()
+
+    signature1 = XMSS_sign(message, KeyPair.getSK(), 16, adrs, 2)
+    signature2 = XMSS_sign(message, KeyPair.getSK(), 16, adrs, 2)
+    signature3 = XMSS_sign(message, KeyPair.getSK(), 16, adrs, 2)
+    signature4 = XMSS_sign(message, KeyPair.getSK(), 16, adrs, 2)
+
+    output1 = XMSS_verify(signature1, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
+    output2 = XMSS_verify(signature2, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
+    output3 = XMSS_verify(signature3, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
+    output4 = XMSS_verify(signature4, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
+    print(output1, output2, output3, output4)

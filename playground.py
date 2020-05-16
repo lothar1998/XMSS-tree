@@ -55,16 +55,16 @@ for a, b in zip(pk, pk_from_signature):
 # print(rootNode)
 adrs3 = ADRS()
 
-keypair = XMSS_keyGen(2, msg_len, w, adrs3)
+keypair = XMSS_keyGen(2, msg_len, w)
 
 # Sig = treeSig(msg, keypair.getSK(), adrs3, w, length_all, int.from_bytes(adrs3.getTreeIndex(), byteorder='big'))
 # print(Sig)
 
-Sig = XMSS_sign(msg, keypair.getSK(), w, adrs3)
+Sig = XMSS_sign(msg, keypair.getSK(), w, adrs3, 2)
 
 value = XMSS_rootFromSig(Sig.idx_sig, Sig.sig.getSig_ots(), Sig.sig.getAuth(), msg, int.from_bytes(adrs3.getTreeHeight(), byteorder='big'), w, SEED, adrs3)
 
-result = XMSS_verify(Sig, msg, keypair.getPK(), w, SEED, adrs3)
+result = XMSS_verify(Sig, msg, keypair.getPK(), w, SEED)
 
 print(result)
 #
