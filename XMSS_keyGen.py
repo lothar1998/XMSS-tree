@@ -42,7 +42,7 @@ def XMSS_keyGen(height: int, n: int, w: int in {4, 16}) -> XMSSKeypair:
     SK.setIdx(idx)
     SK.setRoot(root)
 
-    PK.setOID(set_random_values(n))
+    PK.setOID(0)  # set_random_values(n))
     PK.setRoot(root)
     PK.setSEED(SEED)
 

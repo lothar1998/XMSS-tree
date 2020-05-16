@@ -3,7 +3,7 @@ from XMSS_sign import *
 from XMSS_rootFromSig import *
 
 
-def XMSS_verify(Sig: SigXMSS, M: bytearray, PK: XMSSPublicKey, w: int in {4, 16}, SEED):
+def XMSS_verify(Sig: SigXMSS, M: bytearray, PK: XMSSPublicKey, w: int in {4, 16}, SEED, height: int):
 
     adrs = ADRS()
 
@@ -17,7 +17,7 @@ def XMSS_verify(Sig: SigXMSS, M: bytearray, PK: XMSSPublicKey, w: int in {4, 16}
 
     M2 = H_msg(arrayOfBytes, M, len_1)
 
-    node = XMSS_rootFromSig(Sig.idx_sig, Sig.sig.getSig_ots(), Sig.sig.getAuth(), M2, int.from_bytes(adrs.getTreeHeight(), byteorder='big'), w, SEED, adrs)
+    node = XMSS_rootFromSig(Sig.idx_sig, Sig.sig.getSig_ots(), Sig.sig.getAuth(), M2, height, w, SEED, adrs)
 
     if node == PK.getRoot():
         return True
@@ -37,8 +37,8 @@ if __name__ == '__main__':
     signature3 = XMSS_sign(message, KeyPair.getSK(), 16, adrs, 2)
     signature4 = XMSS_sign(message, KeyPair.getSK(), 16, adrs, 2)
 
-    output1 = XMSS_verify(signature1, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
-    output2 = XMSS_verify(signature2, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
-    output3 = XMSS_verify(signature3, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
-    output4 = XMSS_verify(signature4, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED())
+    output1 = XMSS_verify(signature1, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED(), 2)
+    output2 = XMSS_verify(signature2, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED(), 2)
+    output3 = XMSS_verify(signature3, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED(), 2)
+    output4 = XMSS_verify(signature4, message, KeyPair.getPK(), 16, KeyPair.getPK().getSEED(), 2)
     print(output1, output2, output3, output4)
